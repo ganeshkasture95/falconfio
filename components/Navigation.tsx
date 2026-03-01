@@ -193,9 +193,11 @@ const Navigation: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
               >
                 <button
-                  onClick={() =>
-                    item.id ? scrollToSection(item.id) : undefined
-                  }
+                  onClick={() => {
+                    if ("id" in item) {
+                      scrollToSection(item.id);
+                    }
+                  }}
                   className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
                 >
                   {item.label}
@@ -304,7 +306,7 @@ const Navigation: React.FC = () => {
               <div key={item.label}>
                 <button
                   onClick={() => {
-                    if (item.id) {
+                    if ("id" in item) {
                       scrollToSection(item.id);
                     } else if (item.hasDropdown) {
                       setOpenDropdown(
