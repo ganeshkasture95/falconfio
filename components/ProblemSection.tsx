@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
 import { scrollFadeIn } from "@/lib/animations";
+import { gsap } from "gsap";
+import React, { useEffect, useRef } from "react";
 
 const ProblemSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -84,13 +84,6 @@ const ProblemSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Problems Section Header */}
-        <div className="mb-8 sm:mb-12 px-2">
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold flex items-center gap-2 sm:gap-3">
-            <span className="text-2xl sm:text-3xl">⚠️</span>
-            <span>The Real Problems</span>
-          </h3>
-        </div>
 
         {/* Problems Grid - Next.js Style */}
         <div

@@ -2,7 +2,9 @@
 
 import { scrollFadeIn } from "@/lib/animations";
 import React, { useEffect, useRef } from "react";
+import Link from "next/link";
 import { Card } from "./ui/Card";
+import { Button } from "./ui/Button";
 
 const CaseStudiesSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -101,7 +103,7 @@ const CaseStudiesSection: React.FC = () => {
         </div>
 
         {/* Case Studies */}
-        <div ref={studiesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16 md:mb-20">
+        <div ref={studiesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16">
           {caseStudies.map((study, index) => (
             <Card key={index} className="case-study-card">
               <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{study.title}</h3>
@@ -132,6 +134,28 @@ const CaseStudiesSection: React.FC = () => {
               </div>
             </Card>
           ))}
+        </div>
+
+        {/* View All Case Studies Button */}
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <Link href="/case-studies">
+            <Button variant="primary" size="lg" className="group">
+              View All Case Studies
+              <svg
+                className="w-5 h-5 ml-2 inline-block transform group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Button>
+          </Link>
         </div>
 
         {/* Testimonials */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "./ui/Button";
@@ -162,15 +163,15 @@ const Navigation: React.FC = () => {
         { label: "Case Studies", id: "case-studies" },
       ],
     },
-    {
-      label: "Resources",
-      hasDropdown: true,
-      dropdownItems: [
-        { label: "Documentation", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Support", href: "#" },
-      ],
-    },
+      {
+        label: "Resources",
+        hasDropdown: true,
+        dropdownItems: [
+          { label: "Documentation", href: "#" },
+          { label: "Blog", href: "/blog" },
+          { label: "Support", href: "#" },
+        ],
+      },
     { label: "Enterprise", id: "pricing" },
     { label: "Pricing", id: "pricing" },
   ];
@@ -245,19 +246,32 @@ const Navigation: React.FC = () => {
                     onMouseLeave={handleMouseLeave}
                   >
                     <div className="py-2">
-                      {item.dropdownItems?.map((dropdownItem, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
-                            else if ("href" in dropdownItem) window.location.href = dropdownItem.href;
-                            setOpenDropdown(null);
-                          }}
-                          className="w-full text-left px-4 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 flex items-center group"
-                        >
-                          <span className="group-hover:translate-x-1 transition-transform duration-200">{dropdownItem.label}</span>
-                        </button>
-                      ))}
+                      {item.dropdownItems?.map((dropdownItem, index) => {
+                        if ("href" in dropdownItem) {
+                          return (
+                            <Link
+                              key={index}
+                              href={dropdownItem.href}
+                              onClick={() => setOpenDropdown(null)}
+                              className="w-full text-left px-4 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 flex items-center group"
+                            >
+                              <span className="group-hover:translate-x-1 transition-transform duration-200">{dropdownItem.label}</span>
+                            </Link>
+                          );
+                        }
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
+                              setOpenDropdown(null);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 flex items-center group"
+                          >
+                            <span className="group-hover:translate-x-1 transition-transform duration-200">{dropdownItem.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -353,18 +367,32 @@ const Navigation: React.FC = () => {
                     </button>
                     {isOpen && (
                       <div className="pl-6 pb-2 space-y-1">
-                        {item.dropdownItems.map((dropdownItem, i) => (
-                          <button
-                            key={i}
-                            onClick={() => {
-                              if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
-                              else if ("href" in dropdownItem) window.location.href = dropdownItem.href;
-                            }}
-                            className="w-full text-left px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded"
-                          >
-                            {dropdownItem.label}
-                          </button>
-                        ))}
+                        {item.dropdownItems.map((dropdownItem, i) => {
+                          if ("href" in dropdownItem) {
+                            return (
+                              <Link
+                                key={i}
+                                href={dropdownItem.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="w-full text-left px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded block"
+                              >
+                                {dropdownItem.label}
+                              </Link>
+                            );
+                          }
+                          return (
+                            <button
+                              key={i}
+                              onClick={() => {
+                                if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
+                                setIsMobileMenuOpen(false);
+                              }}
+                              className="w-full text-left px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded"
+                            >
+                              {dropdownItem.label}
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
