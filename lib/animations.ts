@@ -7,6 +7,7 @@ let ScrollTrigger: any = null;
 if (typeof window !== "undefined") {
   try {
     // Try to import ScrollTrigger (it might be a premium plugin)
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const scrollTriggerModule = require("gsap/ScrollTrigger");
     ScrollTrigger = scrollTriggerModule.ScrollTrigger || scrollTriggerModule.default;
     if (ScrollTrigger) {
@@ -14,7 +15,7 @@ if (typeof window !== "undefined") {
     }
   } catch (e) {
     // ScrollTrigger not available, will use Intersection Observer fallback
-    console.warn("ScrollTrigger not available, using fallback animations");
+    // This is expected if ScrollTrigger is not installed
   }
 }
 
@@ -137,7 +138,11 @@ export const scrollFadeIn = (
 
   if (ScrollTrigger && elementArray.length > 0) {
     // Use the first element's parent as trigger for better performance
-    const trigger = elementArray[0]?.parentElement || elementArray[0];
+    const firstElement = elementArray[0];
+    if (!firstElement || !(firstElement instanceof Element)) return;
+    
+    const trigger = firstElement.parentElement || firstElement;
+    if (!trigger || !(trigger instanceof Element)) return;
     
     return gsap.to(elementArray, {
       opacity: 1,
@@ -198,11 +203,21 @@ export const parallax = (
   const { speed = 0.5, start = "top bottom", end = "bottom top" } = options || {};
 
   if (ScrollTrigger) {
+    // Convert TweenTarget to DOM element for trigger
+    const elementArray = Array.isArray(elements)
+      ? elements
+      : (elements as any).length
+      ? Array.from(elements as any)
+      : [elements];
+    
+    const triggerElement = elementArray[0];
+    if (!triggerElement || !(triggerElement instanceof Element)) return;
+
     return gsap.to(elements, {
       yPercent: speed * 100,
       ease: "none",
       scrollTrigger: {
-        trigger: elements,
+        trigger: triggerElement,
         start,
         end,
         scrub: true,

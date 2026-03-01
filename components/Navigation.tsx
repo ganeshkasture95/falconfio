@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
