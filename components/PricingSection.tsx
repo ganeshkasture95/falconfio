@@ -74,21 +74,21 @@ const PricingSection: React.FC = () => {
     <section
       id="pricing"
       ref={sectionRef}
-      className="py-32 px-4 sm:px-6 lg:px-8"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             <span className="gradient-text">Engagement Models</span>
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-2">
             Transparent pricing tailored to your stage and needs
           </p>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {pricingTiers.map((tier, index) => (
             <Card
@@ -106,19 +106,19 @@ const PricingSection: React.FC = () => {
                   </span>
                 </div>
               )}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold mb-2">{tier.title}</h3>
-                <div className="text-4xl font-bold gradient-text mb-2">
+              <div className="text-center mb-5 sm:mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold mb-2">{tier.title}</h3>
+                <div className="text-3xl sm:text-4xl font-bold gradient-text mb-2">
                   {tier.price}
                 </div>
-                <p className="text-foreground/70 text-sm">{tier.description}</p>
+                <p className="text-foreground/70 text-xs sm:text-sm">{tier.description}</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                 {tier.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start">
                     <svg
-                      className="w-5 h-5 text-green-500 mr-2 shrink-0 mt-0.5"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-2 shrink-0 mt-0.5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -130,7 +130,7 @@ const PricingSection: React.FC = () => {
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    <span className="text-foreground/80">{feature}</span>
+                    <span className="text-xs sm:text-sm text-foreground/80 leading-relaxed">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -146,8 +146,8 @@ const PricingSection: React.FC = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12 text-foreground/70">
-          <p>
+        <div className="text-center mt-8 sm:mt-10 md:mt-12 text-foreground/70 px-2">
+          <p className="text-sm sm:text-base">
             All pricing is project-based and customized to your specific needs.
             Contact us for a detailed quote.
           </p>

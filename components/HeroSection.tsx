@@ -44,27 +44,63 @@ const HeroSection: React.FC = () => {
 
     // Animate subheadline
     if (subheadlineRef.current) {
-      gsap.from(subheadlineRef.current, {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 1.2,
-        ease: "power3.out",
-      });
+      const isMobile = window.innerWidth < 768;
+      // Set initial state - visible on mobile, animated on desktop
+      if (isMobile) {
+        gsap.set(subheadlineRef.current, { opacity: 1, y: 0, clearProps: "all" });
+        // Force visibility with timeout as backup
+        setTimeout(() => {
+          if (subheadlineRef.current) {
+            gsap.set(subheadlineRef.current, { opacity: 1, y: 0 });
+            subheadlineRef.current.style.opacity = "1";
+            subheadlineRef.current.style.visibility = "visible";
+          }
+        }, 100);
+      } else {
+        gsap.set(subheadlineRef.current, { opacity: 0, y: 30 });
+        gsap.to(subheadlineRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 1.2,
+          ease: "power3.out",
+        });
+      }
     }
 
     // Animate buttons with stagger
     if (buttonsRef.current) {
       const buttons = buttonsRef.current.querySelectorAll("button");
-      gsap.from(buttons, {
-        opacity: 0,
-        y: 30,
-        scale: 0.8,
-        duration: 0.8,
-        delay: 1.5,
-        stagger: 0.1,
-        ease: "back.out(1.7)",
-      });
+      const isMobile = window.innerWidth < 768;
+      
+      if (isMobile) {
+        // On mobile, make buttons immediately visible
+        gsap.set(buttons, { opacity: 1, y: 0, scale: 1, clearProps: "all" });
+        // Force visibility with timeout as backup
+        setTimeout(() => {
+          if (buttonsRef.current) {
+            const buttons = buttonsRef.current.querySelectorAll("button");
+            buttons.forEach((button) => {
+              gsap.set(button, { opacity: 1, y: 0, scale: 1 });
+              (button as HTMLElement).style.opacity = "1";
+              (button as HTMLElement).style.visibility = "visible";
+            });
+            buttonsRef.current.style.opacity = "1";
+            buttonsRef.current.style.visibility = "visible";
+          }
+        }, 100);
+      } else {
+        // On desktop, use animation
+        gsap.from(buttons, {
+          opacity: 0,
+          y: 30,
+          scale: 0.8,
+          duration: 0.8,
+          delay: 1.5,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+        });
+      }
     }
 
     // Animated mesh gradient background
@@ -129,7 +165,7 @@ const HeroSection: React.FC = () => {
       {/* Animated Grid Background */}
       <AnimatedGrid intensity="high" className="-z-20" />
 
-      {/* Meteors Effect */}
+      {/* Meteors Effect - Reduced on mobile */}
       <div className="absolute inset-0 -z-15 overflow-hidden pointer-events-none">
         <Meteors number={30} />
       </div>
@@ -160,15 +196,16 @@ const HeroSection: React.FC = () => {
         
 
         {/* Floating Orbs - Green Theme */}
-        <div className="floating-orb absolute top-20 left-10 w-72 h-72 bg-[#73E2A7]/20 rounded-full blur-3xl" />
-        <div className="floating-orb absolute bottom-20 right-10 w-96 h-96 bg-[#1C7C54]/20 rounded-full blur-3xl" />
-        <div className="floating-orb absolute top-1/2 left-1/2 w-64 h-64 bg-[#1B512D]/20 rounded-full blur-3xl" />
+        <div className="floating-orb absolute top-20 left-10 w-48 h-48 sm:w-72 sm:h-72 bg-[#73E2A7]/20 rounded-full blur-3xl" />
+        <div className="floating-orb absolute bottom-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-[#1C7C54]/20 rounded-full blur-3xl" />
+        <div className="floating-orb absolute top-1/2 left-1/2 w-40 h-40 sm:w-64 sm:h-64 bg-[#1B512D]/20 rounded-full blur-3xl" />
       </div>
 
       {/* Enhanced Floating Particles */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         {React.useMemo(() => {
-          return Array.from({ length: 30 }, (_, i) => {
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+          return Array.from({ length: isMobile ? 15 : 30 }, (_, i) => {
             const seed = i * 0.1;
             return {
               width: 2 + (seed % 1) * 4,
@@ -223,19 +260,20 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 md:py-32 text-center relative z-10">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-foreground/10 mb-8 animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-card/50 backdrop-blur-sm border border-foreground/10 mb-6 sm:mb-8 animate-fade-in">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-sm text-foreground/70">Available for new projects</span>
+          <span className="text-xs sm:text-sm text-foreground/70">Available for new projects</span>
         </div>
 
         <h1
           ref={headlineRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 leading-tight px-2"
+          style={{ opacity: 1 }}
         >
           <span className="word block">Build Products</span>
           <span className="word block">
@@ -246,7 +284,9 @@ const HeroSection: React.FC = () => {
 
         <p
           ref={subheadlineRef}
-          className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/90 sm:text-foreground/80 md:text-foreground/70 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2"
+          style={{ opacity: 1, visibility: "visible" }}
+          data-mobile-visible
         >
           Full-stack product engineering for ambitious startups. AI integration,
           scalable web & mobile apps, and cloud infrastructure—delivered with
@@ -256,12 +296,16 @@ const HeroSection: React.FC = () => {
         <div
           ref={buttonsRef}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          style={{ opacity: 1, visibility: "visible" }}
+          data-mobile-visible
         >
           <Button
             variant="primary"
             size="lg"
             onClick={() => scrollToSection("cta")}
             className="group relative overflow-hidden"
+            style={{ opacity: 1, visibility: "visible" }}
+            data-mobile-visible
           >
             <span className="relative z-10">Start Your Project</span>
             <span className="absolute inset-0 bg-gradient-to-r from-[#73E2A7] via-[#1C7C54] to-[#1B512D] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -271,6 +315,8 @@ const HeroSection: React.FC = () => {
             size="lg"
             onClick={() => scrollToSection("case-studies")}
             className="group"
+            style={{ opacity: 1, visibility: "visible" }}
+            data-mobile-visible
           >
             <span>View Our Work</span>
             <svg
@@ -290,7 +336,7 @@ const HeroSection: React.FC = () => {
         </div>
 
         {/* Stats Bar */}
-        <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-center">
+        <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 text-center px-2">
           {[
             { value: "50+", label: "Projects Delivered" },
             { value: "98%", label: "Client Satisfaction" },
@@ -303,10 +349,10 @@ const HeroSection: React.FC = () => {
                 animation: `fadeInUp 0.8s ease-out ${1.8 + i * 0.1}s forwards`,
               }}
             >
-              <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">
                 {stat.value}
               </div>
-              <div className="text-sm text-foreground/60">{stat.label}</div>
+              <div className="text-xs sm:text-sm text-foreground/60">{stat.label}</div>
             </div>
           ))}
         </div>

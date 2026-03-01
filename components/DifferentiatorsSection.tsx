@@ -112,33 +112,33 @@ const DifferentiatorsSection: React.FC = () => {
     <section
       id="why-us"
       ref={sectionRef}
-      className="py-32 px-4 sm:px-6 lg:px-8 bg-card/50"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-card/50"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             Why Choose <span className="gradient-text">Falconfio</span>?
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-2">
             We combine engineering excellence with startup-friendly pricing
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16 md:mb-20">
           {stats.map((stat, index) => (
             <div
               key={index}
               className="text-center feature-card"
             >
-              <div className="text-5xl md:text-6xl font-bold gradient-text mb-2">
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold gradient-text mb-2">
                 <AnimatedCounter
                   target={stat.value}
                   suffix={stat.suffix}
                   duration={2}
                 />
               </div>
-              <div className="text-lg text-foreground/70">{stat.label}</div>
+              <div className="text-sm sm:text-base md:text-lg text-foreground/70">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -146,17 +146,19 @@ const DifferentiatorsSection: React.FC = () => {
         {/* Features Grid */}
         <div
           ref={featuresRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
         >
           {features.map((feature, index) => (
             <Card key={index} className="feature-card group">
-              <div className="flex items-start space-x-4">
+              <div className="flex items-start space-x-3 sm:space-x-4">
                 <div className="text-[#73E2A7] flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
+                  <div className="w-8 h-8 sm:w-10 sm:h-10">
+                    {feature.icon}
+                  </div>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-foreground/70">{feature.description}</p>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-foreground/70 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             </Card>

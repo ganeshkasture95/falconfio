@@ -35,6 +35,7 @@ const AnimatedGrid: React.FC<AnimatedGridProps> = ({
 
     const gridSize = 50;
     const lightLines: HTMLElement[] = [];
+    const isMobile = dimensions.width < 768; // Mobile breakpoint
 
     // Create animated light lines
     const createLightLine = (direction: "horizontal" | "vertical") => {
@@ -81,15 +82,26 @@ const AnimatedGrid: React.FC<AnimatedGridProps> = ({
       lightLines.push(line);
     };
 
-    // Create multiple light lines - Reduced count
-    const lightCount = intensity === "low" ? 2 : intensity === "medium" ? 3 : 4;
+    // Create multiple light lines - Reduced count for mobile
+    let lightCount: number;
+    if (isMobile) {
+      // Mobile: significantly reduced
+      lightCount = intensity === "low" ? 1 : intensity === "medium" ? 1 : 2;
+    } else {
+      // Desktop: original count
+      lightCount = intensity === "low" ? 2 : intensity === "medium" ? 3 : 4;
+    }
+    
     for (let i = 0; i < lightCount; i++) {
       createLightLine(i % 2 === 0 ? "horizontal" : "vertical");
     }
 
-    // Create additional delayed lines - Reduced
+    // Create additional delayed lines - Reduced for mobile
     setTimeout(() => {
-      for (let i = 0; i < Math.max(1, Math.floor(lightCount / 2)); i++) {
+      const delayedCount = isMobile 
+        ? Math.max(0, Math.floor(lightCount / 2))
+        : Math.max(1, Math.floor(lightCount / 2));
+      for (let i = 0; i < delayedCount; i++) {
         createLightLine(i % 2 === 0 ? "vertical" : "horizontal");
       }
     }, 2000);

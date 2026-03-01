@@ -243,6 +243,15 @@ html:not(.dark):not(.light) {
   animation: pulse 2s ease-in-out infinite, glow 2s ease-in-out infinite;
 }
 
+/* Mobile visibility fixes */
+@media (max-width: 767px) {
+  /* Ensure content is visible on mobile even if animations fail */
+  [data-mobile-visible] {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -251,6 +260,11 @@ html:not(.dark):not(.light) {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  /* Ensure visibility when reduced motion is enabled */
+  * {
+    opacity: 1 !important;
   }
 }
 

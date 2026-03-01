@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Button } from "./ui/Button";
+import React, { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { Button } from "./ui/Button";
 
-type DropdownItem = 
+type DropdownItem =
   | { label: string; id: string }
   | { label: string; href: string };
 
-type NavItem = 
+type NavItem =
   | {
       label: string;
       hasDropdown: true;
@@ -25,7 +25,10 @@ const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -33,18 +36,16 @@ const Navigation: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     };
   }, []);
 
   useEffect(() => {
     if (navRef.current) {
+      gsap.set(navRef.current, { opacity: 1 });
       gsap.from(navRef.current, {
         y: -20,
         opacity: 0,
@@ -54,35 +55,68 @@ const Navigation: React.FC = () => {
     }
   }, []);
 
+  // Handle mobile menu open/close
   useEffect(() => {
-    // Animate dropdowns
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+
+      if (backdropRef.current) {
+        backdropRef.current.style.display = "block";
+        gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" });
+      }
+
+      if (mobileMenuRef.current) {
+        gsap.fromTo(
+          mobileMenuRef.current,
+          { x: "100%" },
+          { x: "0%", duration: 0.35, ease: "power3.out" }
+        );
+      }
+    } else {
+      document.body.style.overflow = "";
+
+      if (mobileMenuRef.current) {
+        gsap.to(mobileMenuRef.current, {
+          x: "100%",
+          duration: 0.3,
+          ease: "power3.in",
+        });
+      }
+
+      if (backdropRef.current) {
+        gsap.to(backdropRef.current, {
+          opacity: 0,
+          duration: 0.2,
+          ease: "power2.in",
+          onComplete: () => {
+            if (backdropRef.current) backdropRef.current.style.display = "none";
+          },
+        });
+      }
+
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  // Desktop dropdown animations
+  useEffect(() => {
     Object.keys(dropdownRefs.current).forEach((key) => {
       const dropdown = dropdownRefs.current[key];
       if (dropdown) {
         if (openDropdown === key) {
-          // Show dropdown
           dropdown.style.display = "block";
-          gsap.fromTo(
-            dropdown,
-            { opacity: 0, y: -10 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.2,
-              ease: "power2.out",
-            }
-          );
+          gsap.fromTo(dropdown, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" });
         } else {
-          // Hide dropdown
           gsap.to(dropdown, {
             opacity: 0,
-            y: -10,
+            y: -8,
             duration: 0.15,
             ease: "power2.in",
             onComplete: () => {
-              if (dropdown && openDropdown !== key) {
-                dropdown.style.display = "none";
-              }
+              if (dropdown && openDropdown !== key) dropdown.style.display = "none";
             },
           });
         }
@@ -91,12 +125,13 @@ const Navigation: React.FC = () => {
   }, [openDropdown]);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
-      setOpenDropdown(null);
-    }
+    setIsMobileMenuOpen(false);
+    setOpenDropdown(null);
+    setMobileOpenDropdown(null);
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   };
 
   const navItems: NavItem[] = [
@@ -104,9 +139,9 @@ const Navigation: React.FC = () => {
       label: "Product",
       hasDropdown: true,
       dropdownItems: [
-        { label: "Features", id: "services" },
-        { label: "Integrations", id: "technology" },
-        { label: "Updates", id: "case-studies" },
+        { label: "Services", id: "services" },
+        { label: "Technology Stack", id: "technology" },
+        { label: "Why Falconfio", id: "why-us" },
       ],
     },
     {
@@ -136,18 +171,12 @@ const Navigation: React.FC = () => {
         { label: "Support", href: "#" },
       ],
     },
-    {
-      label: "Enterprise",
-      id: "pricing",
-    },
-    {
-      label: "Pricing",
-      id: "pricing",
-    },
+    { label: "Enterprise", id: "pricing" },
+    { label: "Pricing", id: "pricing" },
   ];
 
+
   const handleMouseEnter = (label: string) => {
-    // Clear any pending timeout
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
@@ -156,7 +185,6 @@ const Navigation: React.FC = () => {
   };
 
   const handleMouseLeave = () => {
-    // Add a small delay before closing to prevent flickering
     hoverTimeoutRef.current = setTimeout(() => {
       setOpenDropdown(null);
     }, 150);
@@ -168,15 +196,17 @@ const Navigation: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled
           ? "bg-background/95 backdrop-blur-xl border-b border-foreground/10 shadow-lg shadow-black/5"
-          : "bg-transparent"
+          : "bg-background/80 backdrop-blur-sm lg:bg-transparent"
       }`}
+      style={{ opacity: 1 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <button
             onClick={() => scrollToSection("hero")}
-            className="text-2xl font-bold gradient-text focus:outline-none transition-transform duration-300 hover:scale-105"
+            className="text-xl sm:text-2xl font-bold gradient-text focus:outline-none transition-transform duration-300 hover:scale-105 z-50 relative"
+            style={{ opacity: 1 }}
           >
             Falconfio
           </button>
@@ -187,46 +217,28 @@ const Navigation: React.FC = () => {
               <div
                 key={item.label}
                 className="relative"
-                onMouseEnter={() =>
-                  item.hasDropdown && handleMouseEnter(item.label)
-                }
+                onMouseEnter={() => item.hasDropdown && handleMouseEnter(item.label)}
                 onMouseLeave={handleMouseLeave}
               >
                 <button
-                  onClick={() => {
-                    if ("id" in item) {
-                      scrollToSection(item.id);
-                    }
-                  }}
+                  onClick={() => { if ("id" in item) scrollToSection(item.id); }}
                   className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
                 >
                   {item.label}
                   {item.hasDropdown && (
                     <svg
-                      className={`w-4 h-4 inline-block ml-1 transition-transform duration-300 ${
-                        openDropdown === item.label ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      className={`w-4 h-4 inline-block ml-1 transition-transform duration-300 ${openDropdown === item.label ? "rotate-180" : ""}`}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#73E2A7] to-[#1C7C54] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-[#73E2A7] to-[#1C7C54] transition-all duration-300 group-hover:w-full" />
                 </button>
 
-                {/* Dropdown Menu */}
                 {item.hasDropdown && (
                   <div
-                    ref={(el) => {
-                      dropdownRefs.current[item.label] = el;
-                    }}
+                    ref={(el) => { dropdownRefs.current[item.label] = el; }}
                     className="absolute top-full left-0 mt-2 w-48 rounded-lg bg-card border border-foreground/10 shadow-xl backdrop-blur-xl pointer-events-auto"
                     style={{ display: "none", opacity: 0 }}
                     onMouseEnter={() => handleMouseEnter(item.label)}
@@ -237,18 +249,13 @@ const Navigation: React.FC = () => {
                         <button
                           key={index}
                           onClick={() => {
-                            if ("id" in dropdownItem) {
-                              scrollToSection(dropdownItem.id);
-                            } else if ("href" in dropdownItem) {
-                              window.location.href = dropdownItem.href;
-                            }
+                            if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
+                            else if ("href" in dropdownItem) window.location.href = dropdownItem.href;
                             setOpenDropdown(null);
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 flex items-center group"
                         >
-                          <span className="group-hover:translate-x-1 transition-transform duration-200">
-                            {dropdownItem.label}
-                          </span>
+                          <span className="group-hover:translate-x-1 transition-transform duration-200">{dropdownItem.label}</span>
                         </button>
                       ))}
                     </div>
@@ -271,106 +278,162 @@ const Navigation: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-foreground focus:outline-none transition-transform duration-300 hover:scale-110"
+            className="lg:hidden relative z-[70] text-foreground focus:outline-none p-1"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            style={{ opacity: 1 }}
           >
-            <svg
-              className="w-6 h-6 transition-transform duration-300"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
+            <div className="w-6 h-6 flex flex-col justify-center gap-1.5 transition-all duration-300">
+              <span className={`block h-0.5 bg-foreground rounded-full transition-all duration-300 origin-center ${isMobileMenuOpen ? "rotate-45 translate-y-2" : "w-6"}`} />
+              <span className={`block h-0.5 bg-foreground rounded-full transition-all duration-300 ${isMobileMenuOpen ? "opacity-0 w-0" : "w-5"}`} />
+              <span className={`block h-0.5 bg-foreground rounded-full transition-all duration-300 origin-center ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : "w-6"}`} />
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Backdrop */}
+      <div
+        ref={backdropRef}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] lg:hidden"
+        onClick={() => setIsMobileMenuOpen(false)}
+        style={{ display: "none" }}
+      />
+
+      {/* Mobile Drawer — slides in from right */}
+      <div
+        ref={mobileMenuRef}
+        className="fixed top-0 right-0 h-full w-[85vw] max-w-sm bg-background z-[60] lg:hidden flex flex-col shadow-2xl"
+        style={{ transform: "translateX(100%)" }}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-foreground/10 shrink-0">
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="flex items-center gap-2.5 focus:outline-none"
+          >
+            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-[#73E2A7] to-[#1C7C54] flex items-center justify-center shadow-md">
+              <span className="text-white font-bold text-sm">F</span>
+            </div>
+            <span className="text-base font-bold text-foreground">Falconfio</span>
+          </button>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="w-8 h-8 rounded-lg bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center text-foreground/60 hover:text-foreground transition-all duration-200"
+            aria-label="Close menu"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
-            isMobileMenuOpen
-              ? "max-h-screen opacity-100"
-              : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="py-4 space-y-2 border-t border-foreground/10">
-            {navItems.map((item) => (
-              <div key={item.label}>
-                <button
-                  onClick={() => {
-                    if ("id" in item) {
-                      scrollToSection(item.id);
-                    } else if (item.hasDropdown) {
-                      setOpenDropdown(
-                        openDropdown === item.label ? null : item.label
-                      );
-                    }
-                  }}
-                  className="w-full text-left px-4 py-3 text-foreground/80 hover:text-foreground transition-colors duration-200 font-medium flex items-center justify-between"
-                >
-                  <span>{item.label}</span>
-                  {item.hasDropdown && (
-                    <svg
-                      className={`w-4 h-4 transition-transform duration-300 ${
-                        openDropdown === item.label ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto py-2">
+          {/* Main Navigation Items - Notion Style */}
+          <div className="px-2 space-y-1">
+            {navItems.map((item) => {
+              if (item.hasDropdown) {
+                const isOpen = mobileOpenDropdown === item.label;
+                return (
+                  <div key={item.label}>
+                    <button
+                      onClick={() => setMobileOpenDropdown(isOpen ? null : item.label)}
+                      className="w-full flex items-center justify-between px-3 py-3 text-base font-medium text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  )}
-                </button>
-                {item.hasDropdown && openDropdown === item.label && (
-                  <div className="pl-4 space-y-1">
-                    {item.dropdownItems?.map((dropdownItem, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          if ("id" in dropdownItem) {
-                            scrollToSection(dropdownItem.id);
-                          } else if ("href" in dropdownItem) {
-                            window.location.href = dropdownItem.href;
-                          }
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="w-full text-left px-4 py-2 text-sm text-foreground/60 hover:text-foreground transition-colors duration-200"
+                      <span>{item.label}</span>
+                      <svg
+                        className={`w-4 h-4 text-foreground/50 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        {dropdownItem.label}
-                      </button>
-                    ))}
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div className="pl-6 pb-2 space-y-1">
+                        {item.dropdownItems.map((dropdownItem, i) => (
+                          <button
+                            key={i}
+                            onClick={() => {
+                              if ("id" in dropdownItem) scrollToSection(dropdownItem.id);
+                              else if ("href" in dropdownItem) window.location.href = dropdownItem.href;
+                            }}
+                            className="w-full text-left px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded"
+                          >
+                            {dropdownItem.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
+                );
+              } else {
+                return (
+                  <button
+                    key={item.label}
+                    onClick={() => scrollToSection(item.id)}
+                    className="w-full text-left px-3 py-3 text-base font-medium text-foreground hover:bg-foreground/5 transition-colors duration-150 rounded"
+                  >
+                    {item.label}
+                  </button>
+                );
+              }
+            })}
+          </div>
+
+          {/* Additional Services Section */}
+          <div className="mx-3 mt-6 mb-4">
+            <div className="p-3 rounded-lg bg-foreground/5 border border-foreground/10">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 bg-foreground/10 rounded flex items-center justify-center">
+                    <span className="text-foreground text-xs font-bold">F</span>
+                  </div>
+                  <span className="text-sm font-medium text-foreground">Falconfio Services</span>
+                </div>
+                <div className="space-y-1">
+                  {[
+                    { icon: "⚙️", label: "Product Engineering" },
+                    { icon: "🤖", label: "AI Solutions" },
+                    { icon: "☁️", label: "Cloud Services" },
+                  ].map((service) => (
+                    <button
+                      key={service.label}
+                      onClick={() => scrollToSection("services")}
+                      className="w-full flex items-center gap-2.5 text-left hover:bg-foreground/5 rounded px-2 py-1.5 transition-colors duration-150"
+                    >
+                      <span className="text-base">{service.icon}</span>
+                      <span className="text-sm font-medium text-foreground">{service.label}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            ))}
-            <div className="pt-4 border-t border-foreground/10 space-y-3">
-              <div className="flex items-center justify-between px-4">
-                <span className="text-sm text-foreground/70">Theme</span>
-                <ThemeToggle />
-              </div>
-              <Button
-                variant="primary"
-                size="sm"
-                className="w-full"
-                onClick={() => scrollToSection("cta")}
-              >
-                Request a demo
-              </Button>
             </div>
+          </div>
+        </div>
+
+        {/* Drawer Footer */}
+        <div className="shrink-0 px-4 py-4 border-t border-foreground/10 bg-background space-y-2.5">
+          <Button
+            variant="primary"
+            size="lg"
+            className="w-full"
+            onClick={() => scrollToSection("cta")}
+          >
+            Request a Demo
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full"
+            onClick={() => { window.location.href = "mailto:hello@falconfio.com"; setIsMobileMenuOpen(false); }}
+          >
+            Contact Us
+          </Button>
+          <div className="flex items-center justify-center pt-1">
+            <ThemeToggle />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import AnimatedGrid from "@/components/AnimatedGrid";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import CTASection from "@/components/CTASection";
 import DifferentiatorsSection from "@/components/DifferentiatorsSection";
@@ -8,7 +9,6 @@ import PricingSection from "@/components/PricingSection";
 import ProblemSection from "@/components/ProblemSection";
 import ServicesSection from "@/components/ServicesSection";
 import TechnologySection from "@/components/TechnologySection";
-import AnimatedGrid from "@/components/AnimatedGrid";
 
 export default function Home() {
   return (
@@ -26,6 +26,6 @@ export default function Home() {
       <CaseStudiesSection />
       <CTASection />
       <Footer />
-    </main>
+      </main>
   );
 }

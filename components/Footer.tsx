@@ -54,15 +54,15 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-foreground/10 py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-card border-t border-foreground/10 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company Info */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold gradient-text mb-4">
+          <div className="col-span-1 sm:col-span-2 md:col-span-2">
+            <h3 className="text-xl sm:text-2xl font-bold gradient-text mb-3 sm:mb-4">
               Falconfio
             </h3>
-            <p className="text-foreground/70 mb-4 max-w-md">
+            <p className="text-sm sm:text-base text-foreground/70 mb-3 sm:mb-4 max-w-md">
               Full-stack product engineering for ambitious startups. We help you
               build products that scale.
             </p>
@@ -76,7 +76,9 @@ const Footer: React.FC = () => {
                   className="text-foreground/60 hover:text-foreground transition-colors duration-200"
                   aria-label={social.name}
                 >
-                  {social.icon}
+                  <div className="w-5 h-5">
+                    {social.icon}
+                  </div>
                 </a>
               ))}
             </div>
@@ -84,13 +86,13 @@ const Footer: React.FC = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-bold mb-4">Navigation</h4>
+            <h4 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Navigation</h4>
             <ul className="space-y-2">
               {navigationLinks.map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => scrollToSection(link.id)}
-                    className="text-foreground/60 hover:text-foreground transition-colors duration-200 text-sm"
+                    className="text-xs sm:text-sm text-foreground/60 hover:text-foreground transition-colors duration-200"
                   >
                     {link.label}
                   </button>
@@ -101,14 +103,15 @@ const Footer: React.FC = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold mb-4">Get Started</h4>
-            <p className="text-foreground/60 text-sm mb-4">
+            <h4 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Get Started</h4>
+            <p className="text-xs sm:text-sm text-foreground/60 mb-3 sm:mb-4">
               Ready to build your next product?
             </p>
             <Button
               variant="primary"
               size="sm"
               onClick={() => scrollToSection("cta")}
+              className="text-xs sm:text-sm"
             >
               Contact Us
             </Button>
@@ -116,20 +119,20 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-foreground/60 text-sm">
+        <div className="border-t border-foreground/10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs sm:text-sm text-foreground/60">
             © {new Date().getFullYear()} Falconfio. All rights reserved.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex space-x-4 sm:space-x-6">
             <a
               href="#"
-              className="text-foreground/60 hover:text-foreground text-sm transition-colors duration-200"
+              className="text-xs sm:text-sm text-foreground/60 hover:text-foreground transition-colors duration-200"
             >
               Privacy Policy
             </a>
             <a
               href="#"
-              className="text-foreground/60 hover:text-foreground text-sm transition-colors duration-200"
+              className="text-xs sm:text-sm text-foreground/60 hover:text-foreground transition-colors duration-200"
             >
               Terms of Service
             </a>

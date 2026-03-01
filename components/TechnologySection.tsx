@@ -73,50 +73,50 @@ const TechnologySection: React.FC = () => {
     <section
       id="technology"
       ref={sectionRef}
-      className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/30 to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             <span className="gradient-text">Powered By</span>
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-2">
             Cutting-edge technology stack engineered for performance and scale
           </p>
         </div>
 
         {/* Animated Circuit */}
-        <div className="mb-16 tech-item">
+        <div className="mb-10 sm:mb-12 md:mb-16 tech-item">
           <AnimatedCircuit />
         </div>
 
         {/* Technology Grid */}
         <div
           ref={contentRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
         >
           {technologies.map((tech, index) => (
             <div
               key={index}
-              className="tech-item group relative p-6 rounded-xl bg-card border border-foreground/10 hover:border-foreground/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#73E2A7]/10"
+              className="tech-item group relative p-4 sm:p-6 rounded-xl bg-card border border-foreground/10 hover:border-foreground/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#73E2A7]/10"
               style={{ opacity: 1 }}
             >
               {/* Icon */}
-              <div className="text-4xl mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                 {tech.icon}
               </div>
               
               {/* Name */}
-              <div className="text-2xl font-bold gradient-text mb-2 text-center">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold gradient-text mb-1 sm:mb-2 text-center">
                 {tech.name}
               </div>
               
               {/* Category */}
-              <div className="text-sm font-semibold text-foreground/80 mb-3 text-center">
+              <div className="text-xs sm:text-sm font-semibold text-foreground/80 mb-2 sm:mb-3 text-center">
                 {tech.category}
               </div>
               
@@ -132,14 +132,14 @@ const TechnologySection: React.FC = () => {
         </div>
 
         {/* Additional Info */}
-        <div className="mt-20 text-center tech-item">
-          <div className="inline-block px-6 py-3 rounded-full bg-card border border-foreground/10 mb-6">
-            <p className="text-foreground/80 font-medium">
+        <div className="mt-12 sm:mt-16 md:mt-20 text-center tech-item px-2">
+          <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-card border border-foreground/10 mb-4 sm:mb-6">
+            <p className="text-sm sm:text-base text-foreground/80 font-medium">
               <span className="gradient-text font-bold">100+</span> Technologies
               in Our Arsenal
             </p>
           </div>
-          <p className="text-foreground/70 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-foreground/70 max-w-3xl mx-auto leading-relaxed">
             We leverage the latest technologies and best practices to build
             scalable, performant applications that grow with your business. Our
             expertise spans across modern frameworks, AI/ML tools, cloud
@@ -147,12 +147,12 @@ const TechnologySection: React.FC = () => {
           </p>
           
           {/* Tech Categories */}
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 sm:mt-10 md:mt-12 flex flex-wrap justify-center gap-2 sm:gap-4">
             {["Frontend", "Backend", "AI/ML", "Cloud", "DevOps", "Mobile"].map(
               (category, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 rounded-full bg-card border border-foreground/10 text-sm text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-all duration-200"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-card border border-foreground/10 text-xs sm:text-sm text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-all duration-200"
                 >
                   {category}
                 </span>

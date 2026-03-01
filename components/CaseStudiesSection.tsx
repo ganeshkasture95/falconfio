@@ -88,29 +88,29 @@ const CaseStudiesSection: React.FC = () => {
     <section
       id="case-studies"
       ref={sectionRef}
-      className="py-32 px-4 sm:px-6 lg:px-8 bg-card/50"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-card/50"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             <span className="gradient-text">Success Stories</span>
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-2">
             See how we&apos;ve helped startups build and scale their products
           </p>
         </div>
 
         {/* Case Studies */}
-        <div ref={studiesRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div ref={studiesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16 md:mb-20">
           {caseStudies.map((study, index) => (
             <Card key={index} className="case-study-card">
-              <h3 className="text-2xl font-bold mb-3">{study.title}</h3>
-              <p className="text-foreground/70 mb-6">{study.description}</p>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{study.title}</h3>
+              <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-6 leading-relaxed">{study.description}</p>
 
-              <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
                 {study.metrics.map((metric, metricIndex) => (
                   <div key={metricIndex} className="text-center">
-                    <div className="text-2xl font-bold gradient-text">
+                    <div className="text-xl sm:text-2xl font-bold gradient-text">
                       {metric.value}
                     </div>
                     <div className="text-xs text-foreground/60 mt-1">
@@ -124,7 +124,7 @@ const CaseStudiesSection: React.FC = () => {
                 {study.tech.map((tech, techIndex) => (
                   <span
                     key={techIndex}
-                    className="px-3 py-1 bg-foreground/10 rounded-full text-sm text-foreground/70"
+                    className="px-2 sm:px-3 py-1 bg-foreground/10 rounded-full text-xs sm:text-sm text-foreground/70"
                   >
                     {tech}
                   </span>
@@ -135,31 +135,31 @@ const CaseStudiesSection: React.FC = () => {
         </div>
 
         {/* Testimonials */}
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold mb-4">What Our Clients Say</h3>
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 px-2">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">What Our Clients Say</h3>
         </div>
 
         <div
           ref={testimonialsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="testimonial-card">
-              <div className="mb-4">
+              <div className="mb-3 sm:mb-4">
                 <svg
-                  className="w-8 h-8 text-[#73E2A7] mb-4"
+                  className="w-6 h-6 sm:w-8 sm:h-8 text-[#73E2A7] mb-3 sm:mb-4"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.984zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
               </div>
-              <p className="text-foreground/80 mb-6 italic">
+              <p className="text-sm sm:text-base text-foreground/80 mb-4 sm:mb-6 italic leading-relaxed">
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
               <div>
-                <div className="font-bold">{testimonial.author}</div>
-                <div className="text-sm text-foreground/60">
+                <div className="font-bold text-sm sm:text-base">{testimonial.author}</div>
+                <div className="text-xs sm:text-sm text-foreground/60">
                   {testimonial.role}
                 </div>
               </div>

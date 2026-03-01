@@ -105,30 +105,32 @@ const ServicesSection: React.FC = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="py-32 px-4 sm:px-6 lg:px-8"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             <span className="gradient-text">Our Services</span>
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-2">
             Comprehensive product engineering solutions tailored to your needs
           </p>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
         >
           {services.map((service, index) => (
             <Card key={index} className="service-card group">
               <div className="flex flex-col h-full">
-                <div className="text-[#73E2A7] mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
+                <div className="text-[#73E2A7] mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12">
+                    {service.icon}
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                <p className="text-foreground/70 grow">
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{service.title}</h3>
+                <p className="text-sm sm:text-base text-foreground/70 grow leading-relaxed">
                   {service.description}
                 </p>
               </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import { fadeIn } from "@/lib/animations";
+import { gsap } from "gsap";
+import React, { useEffect, useRef } from "react";
 import { Button } from "./ui/Button";
 
 const CTASection: React.FC = () => {
@@ -10,7 +11,28 @@ const CTASection: React.FC = () => {
 
   useEffect(() => {
     if (contentRef.current) {
-      fadeIn(contentRef.current, { delay: 0.2 });
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+      // On mobile, make content immediately visible and keep it visible
+      if (isMobile) {
+        gsap.set(contentRef.current, { opacity: 1, y: 0, clearProps: "all" });
+        // Also set children to visible
+        const children = contentRef.current.children;
+        Array.from(children).forEach((child) => {
+          gsap.set(child, { opacity: 1, y: 0, clearProps: "all" });
+        });
+        // Force visibility with a timeout as backup
+        setTimeout(() => {
+          if (contentRef.current) {
+            gsap.set(contentRef.current, { opacity: 1, y: 0 });
+            contentRef.current.style.opacity = "1";
+            contentRef.current.style.visibility = "visible";
+          }
+        }, 100);
+      } else {
+        // On desktop, use animation
+        gsap.set(contentRef.current, { opacity: 1 });
+        fadeIn(contentRef.current, { delay: 0.2 });
+      }
     }
   }, []);
 
@@ -25,7 +47,7 @@ const CTASection: React.FC = () => {
     <section
       id="cta"
       ref={sectionRef}
-      className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Animated Background - Green Theme */}
       <div className="absolute inset-0 -z-10">
@@ -48,18 +70,30 @@ const CTASection: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <div ref={contentRef}>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+        <div ref={contentRef} style={{ opacity: 1, visibility: "visible" }} data-mobile-visible>
+          <h2 
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white px-2"
+            style={{ opacity: 1, visibility: "visible" }}
+            data-mobile-visible
+          >
             Ready to Build Your
             <br />
             <span className="text-white/90">Next Product?</span>
           </h2>
-          <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Let's discuss how we can help bring your vision to life. From AI
-            integration to full-stack development, we've got you covered.
+          <p 
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 sm:text-white/80 mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed px-2"
+            style={{ opacity: 1, visibility: "visible" }}
+            data-mobile-visible
+          >
+            Let&apos;s discuss how we can help bring your vision to life. From AI
+            integration to full-stack development, we&apos;ve got you covered.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center px-2"
+            style={{ opacity: 1, visibility: "visible" }}
+            data-mobile-visible
+          >
             <Button
               variant="secondary"
               size="lg"
@@ -67,7 +101,8 @@ const CTASection: React.FC = () => {
                 // In a real app, this would open a contact form or link to a contact page
                 window.location.href = "mailto:hello@falconfio.com";
               }}
-              className="bg-white text-gray-900 hover:bg-white/90 animate-pulse-glow"
+              className="bg-white text-gray-900 hover:bg-white/90 w-full sm:w-auto"
+              style={{ opacity: 1, visibility: "visible" }}
             >
               Schedule a Consultation
             </Button>
@@ -75,15 +110,16 @@ const CTASection: React.FC = () => {
               variant="outline"
               size="lg"
               onClick={() => scrollToSection("case-studies")}
-              className="border-white text-white hover:bg-white/10"
+              className="border-white text-white hover:bg-white/10 w-full sm:w-auto"
+              style={{ opacity: 1, visibility: "visible" }}
             >
               View Case Studies
             </Button>
           </div>
 
-          <div className="mt-12 text-white/70">
-            <p className="text-sm">
-              No commitment required. Let's explore how we can work together.
+          <div className="mt-8 sm:mt-10 md:mt-12 text-white/80 sm:text-white/70 px-2">
+            <p className="text-xs sm:text-sm">
+              No commitment required. Let&apos;s explore how we can work together.
             </p>
           </div>
         </div>

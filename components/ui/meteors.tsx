@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
 export const Meteors = ({
   number,
@@ -9,7 +9,23 @@ export const Meteors = ({
   number?: number;
   className?: string;
 }) => {
-  const meteorCount = number || 20;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const meteorCount = useMemo(() => {
+    if (number !== undefined) {
+      return isMobile ? Math.max(1, Math.floor(number / 2)) : number;
+    }
+    return isMobile ? 10 : 20;
+  }, [number, isMobile]);
   
   const meteors = useMemo(() => {
     return Array.from({ length: meteorCount }, (_, idx) => {
