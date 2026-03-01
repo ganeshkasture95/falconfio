@@ -5,6 +5,22 @@ import { gsap } from "gsap";
 import { Button } from "./ui/Button";
 import ThemeToggle from "./ThemeToggle";
 
+type DropdownItem = 
+  | { label: string; id: string }
+  | { label: string; href: string };
+
+type NavItem = 
+  | {
+      label: string;
+      hasDropdown: true;
+      dropdownItems: DropdownItem[];
+    }
+  | {
+      label: string;
+      id: string;
+      hasDropdown?: false;
+    };
+
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -83,7 +99,7 @@ const Navigation: React.FC = () => {
     }
   };
 
-  const navItems = [
+  const navItems: NavItem[] = [
     {
       label: "Product",
       hasDropdown: true,
@@ -219,9 +235,9 @@ const Navigation: React.FC = () => {
                         <button
                           key={index}
                           onClick={() => {
-                            if (dropdownItem.id) {
+                            if ("id" in dropdownItem) {
                               scrollToSection(dropdownItem.id);
-                            } else if (dropdownItem.href) {
+                            } else if ("href" in dropdownItem) {
                               window.location.href = dropdownItem.href;
                             }
                             setOpenDropdown(null);
@@ -323,9 +339,9 @@ const Navigation: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => {
-                          if (dropdownItem.id) {
+                          if ("id" in dropdownItem) {
                             scrollToSection(dropdownItem.id);
-                          } else if (dropdownItem.href) {
+                          } else if ("href" in dropdownItem) {
                             window.location.href = dropdownItem.href;
                           }
                           setIsMobileMenuOpen(false);
