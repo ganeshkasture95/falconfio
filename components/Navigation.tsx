@@ -1,6 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
@@ -206,10 +207,17 @@ const Navigation: React.FC = () => {
           {/* Logo */}
           <button
             onClick={() => scrollToSection("hero")}
-            className="text-xl sm:text-2xl font-bold gradient-text focus:outline-none transition-transform duration-300 hover:scale-105 z-50 relative"
+            className="focus:outline-none transition-transform duration-300 hover:scale-105 z-50 relative flex items-center"
             style={{ opacity: 1 }}
           >
-            Falconfio
+            <Image
+              src="/falconfiobiglogo.png"
+              alt="Falconfio"
+              width={140}
+              height={50}
+              className="h-10 w-auto sm:h-12 md:h-14"
+              priority
+            />
           </button>
 
           {/* Desktop Navigation */}
@@ -326,10 +334,14 @@ const Navigation: React.FC = () => {
             onClick={() => scrollToSection("hero")}
             className="flex items-center gap-2.5 focus:outline-none"
           >
-            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-[#73E2A7] to-[#1C7C54] flex items-center justify-center shadow-md">
-              <span className="text-white font-bold text-sm">F</span>
-            </div>
-            <span className="text-base font-bold text-foreground">Falconfio</span>
+            <Image
+              src="/falconfiobiglogo.png"
+              alt="Falconfio"
+              width={110}
+              height={40}
+              className="h-9 w-auto"
+              priority
+            />
           </button>
           <button
             onClick={() => setIsMobileMenuOpen(false)}

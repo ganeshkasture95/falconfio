@@ -68,7 +68,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   };
 
   return (
-    <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <div>
       <div className="border-l border-foreground/10 pl-4">
         <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider mb-4">
           On this page

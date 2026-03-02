@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/Button";
 
@@ -59,9 +60,15 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company Info */}
           <div className="col-span-1 sm:col-span-2 md:col-span-2">
-            <h3 className="text-xl sm:text-2xl font-bold gradient-text mb-3 sm:mb-4">
-              Falconfio
-            </h3>
+            <div className="mb-3 sm:mb-4">
+              <Image
+                src="/falconfiobiglogo.png"
+                alt="Falconfio"
+                width={160}
+                height={57}
+                className="h-12 w-auto sm:h-14"
+              />
+            </div>
             <p className="text-sm sm:text-base text-foreground/70 mb-3 sm:mb-4 max-w-md">
               Full-stack product engineering for ambitious startups. We help you
               build products that scale.

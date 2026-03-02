@@ -223,8 +223,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
               {/* Sidebar - Table of Contents & Share */}
               <aside className="hidden lg:block">
-                <TableOfContents items={toc} />
-                <ShareButtons title={caseStudy.frontmatter.title} url={`/case-studies/${slug}`} />
+                <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                  <TableOfContents items={toc} />
+                  <ShareButtons title={caseStudy.frontmatter.title} url={`/case-studies/${slug}`} />
+                </div>
               </aside>
             </div>
           </div>

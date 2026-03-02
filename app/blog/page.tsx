@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -26,6 +27,15 @@ export default function BlogPage() {
         {/* Header Section */}
         <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto text-center">
+            <div className="flex justify-center mb-8">
+              <Image
+                src="/falconfiobiglogo.png"
+                alt="Falconfio"
+                width={200}
+                height={71}
+                className="h-14 w-auto sm:h-16 md:h-20"
+              />
+            </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
               <span className="gradient-text">Blog</span>
             </h1>
