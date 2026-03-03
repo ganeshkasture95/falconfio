@@ -20,7 +20,7 @@ export default function CaseStudiesPage() {
         {/* Header Section */}
         <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center items-center gap-3 mb-8">
               <Image
                 src="/falconfiobiglogo.png"
                 alt="Falconfio"
@@ -28,6 +28,10 @@ export default function CaseStudiesPage() {
                 height={71}
                 className="h-14 w-auto sm:h-16 md:h-20"
               />
+              <span className="text-2xl sm:text-3xl md:text-4xl gradient-text">
+                <span className="font-bold">Falcon</span>
+                <span className="font-normal">Fio</span>
+              </span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
               <span className="gradient-text">Case Studies</span>

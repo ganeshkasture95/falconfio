@@ -207,7 +207,7 @@ const Navigation: React.FC = () => {
           {/* Logo */}
           <button
             onClick={() => scrollToSection("hero")}
-            className="focus:outline-none transition-transform duration-300 hover:scale-105 z-50 relative flex items-center"
+            className="focus:outline-none transition-transform duration-300 hover:scale-105 z-50 relative flex items-center gap-2"
             style={{ opacity: 1 }}
           >
             <Image
@@ -218,6 +218,10 @@ const Navigation: React.FC = () => {
               className="h-10 w-auto sm:h-12 md:h-14"
               priority
             />
+            <span className="text-lg sm:text-xl md:text-2xl gradient-text">
+              <span className="font-bold">Falcon</span>
+              <span className="font-normal">Fio</span>
+            </span>
           </button>
 
           {/* Desktop Navigation */}
@@ -342,6 +346,10 @@ const Navigation: React.FC = () => {
               className="h-9 w-auto"
               priority
             />
+            <span className="text-lg gradient-text">
+              <span className="font-bold">Falcon</span>
+              <span className="font-normal">Fio</span>
+            </span>
           </button>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
