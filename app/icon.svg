@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 580" width="256" height="256" role="img" aria-label="Falconfio logo mark">
+  <!-- Falconfio mark: eagle head whose crest forms an "F". Falcon Navy #0A0F5C, Strike Red #E10600, White -->
+  <g transform="translate(290 290) scale(0.94) translate(-294 -291)">
+    <path fill="#FFFFFF" d="M103 243 C141 233 155 231 175 229 L330 225 L320 165 C345 150 420 150 475 147 C515 138 545 120 560 78 C455 87 325 87 235 101 C137 117 53 175 27 237 C19 253 21 273 33 290 Z"/>
+    <path fill="none" stroke="#0A0F5C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M103 243 C80 249 55 260 40 277 L33 290 C21 273 19 253 27 237 C53 175 137 117 235 101 C325 87 455 87 562 79 C547 120 515 140 470 150"/>
+    <path fill="#0A0F5C" d="M258 187 C285 165 345 157 415 153 C478 150 528 128 556 86 C538 130 495 152 435 163 C395 170 355 177 330 187 L327 217 L267 213 Z"/>
+    <path fill="#0A0F5C" d="M97 245 C135 233 205 231 275 231 L431 237 L387 290 L235 297 C213 362 178 445 123 503 C137 425 157 335 167 273 C145 263 120 255 97 245 Z"/>
+    <path fill="#E10600" d="M237 311 L355 305 C330 335 297 365 272 405 C247 455 197 485 139 501 C180 445 210 385 237 311 Z"/>
+    <g fill="#0A0F5C"><ellipse cx="80" cy="215" rx="9" ry="7"/><path d="M111 191 C123 177 137 171 157 173 C143 181 129 187 111 191 Z"/></g>
+  </g>
+</svg>

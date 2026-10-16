@@ -1,98 +1,42 @@
-# 🚀 Falconfio - Full-Stack Product Engineering
+# Falconfio
 
-**Falconfio** is a full-stack product engineering company that helps ambitious startups build scalable, AI-powered products. We specialize in transforming early-stage ideas into production-ready applications that can scale from 1,000 to 50,000+ users without breaking.
+The website for **Falconfio**, a technical brand by GK TechMatrix: products that scale, and AI agents that do real work.
 
-## 🎯 What We Do
+Built with Next.js 16 (App Router, Cache Components), React 19, Tailwind CSS v4 and MDX.
 
-Falconfio provides end-to-end product engineering services for startups and tech companies:
+## Getting started
 
-### Core Services
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-- **🤖 AI Development & Integration**
-  - Strategic AI roadmap planning
-  - Custom AI/ML model development
-  - AI feature integration into existing products
-  - Chatbots and conversational AI
-  - Enterprise AI systems
+Before pushing:
 
-- **💻 Web & Mobile Development**
-  - Full-stack web applications
-  - Native and cross-platform mobile apps
-  - Scalable architecture design
-  - MVP development and rapid prototyping
+```bash
+npm run lint
+npm run typecheck
+npm run check:tokens   # no raw hex/rgb colours in components; use the brand tokens in app/globals.css
+npm run build
+```
 
-- **☁️ Cloud Infrastructure**
-  - Cloud architecture and migration
-  - DevOps and CI/CD pipelines
-  - Infrastructure optimization
-  - Cost-effective scaling solutions
+## Project map
 
-- **🏗️ Product Engineering**
-  - Technical architecture design
-  - Scalable system architecture
-  - Code quality and best practices
-  - Long-term technical strategy
+| Path | What lives there |
+|---|---|
+| `app/(marketing)/` | Pages: home, `/services`, `/services/[slug]`, `/agents`, `/case-studies`, `/case-studies/[slug]`, `/products` |
+| `components/sections/` | Home page sections |
+| `components/agents/` | The AI agents page: agent network, task prompt, playground demos, catalogue, builder |
+| `components/guide/GuideBot.tsx` | Falco, the on-page guide that explains whatever the pointer rests on (`data-guide` attributes) |
+| `components/layout/` | Header (mega-menu, mobile drawer) and footer |
+| `components/brand/` | Logo, the Falco agent mark, technology logos |
+| `content/data/` | Site copy and data: services catalogue, agents, products, navigation |
+| `content/case-studies/*.mdx` | Case studies (`export const meta = {…}` at the top of each file) |
+| `public/brand/` | Logo SVGs, including `falco-agent.svg` |
+| `public/images/services/` | Service photos (CC0, from StockSnap; credits in `content/data/services.ts`) |
 
-## 💡 The Problem We Solve
+## Content notes
 
-Most startups don't fail because of their product idea—they fail because of **architectural decisions** made early on. As you scale from 1,000 to 50,000 users, early engineering shortcuts become bottlenecks that slow down development, increase costs, and limit growth.
-
-**Common problems we solve:**
-- Apps that slow down as user base grows
-- Features taking longer to ship every month
-- Rising infrastructure costs without clarity
-- AI implementations without measurable impact
-- Early technical decisions blocking growth
-- Lack of senior engineering direction
-
-## 🎯 Our Approach
-
-We focus on building **strong foundations** from the start. Our engineering approach ensures that:
-
-- Your architecture scales with your business
-- Development velocity stays high as you grow
-- Infrastructure costs are predictable and optimized
-- AI features deliver measurable business value
-- Technical debt doesn't accumulate
-- You have clear architectural vision and direction
-
-## 💼 Engagement Models
-
-### Project-Based
-- **MVP Development**: $25K - $80K
-- **Scaling & Architecture**: $80K - $200K+
-- **Enterprise Solutions**: Custom pricing
-
-### Retainer Models
-- **Ongoing Support**: $2K - $20K/month
-- **AI Strategy & Development**: $3K - $30K+/month
-
-## 🛠️ Technology Stack
-
-We work with modern, scalable technologies:
-
-- **Frontend**: React, Next.js, React Native, TypeScript
-- **Backend**: Node.js, Python, Go, Microservices
-- **AI/ML**: TensorFlow, PyTorch, OpenAI, Custom Models
-- **Cloud**: AWS, Azure, GCP, Kubernetes, Docker
-- **Databases**: PostgreSQL, MongoDB, Redis, Elasticsearch
-- **DevOps**: CI/CD, Terraform, Monitoring, Logging
-
-## 🎨 Our Website
-
-This website showcases Falconfio's services, approach, and value proposition. Built with modern web technologies, it features:
-
-- Smooth animations and micro-interactions
-- Responsive design for all devices
-- Dark/light theme support
-- Fast loading and optimized performance
-
-## 📞 Get Started
-
-Ready to build something that scales? Let's discuss how Falconfio can help transform your startup's technical foundation.
-
-**Contact us** through the website to request a demo or consultation.
-
----
-
-*Building products that scale. Engineering that lasts.*
+- Figures in the hero stats, commitments and case studies should be verified before launch.
+- Agent demos on `/agents` are scripted illustrations with made-up data, and are labelled as such.
+- Links to pages not built yet (`/contact`, `/how-we-work`, `/blog`, `/about`, `/privacy`, `/terms`, `/tools/*`) return 404 for now.

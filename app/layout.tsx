@@ -13,41 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Falconfio - Full-Stack Product Engineering | AI, Web & Mobile Development",
-  description: "Full-stack product engineering for ambitious startups. AI integration, scalable web & mobile apps, and cloud infrastructure—delivered with precision.",
-  keywords: ["product engineering", "AI development", "web development", "mobile development", "cloud infrastructure", "startup development"],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://falconfio.com"),
+  title: {
+    default: "Falconfio | Engineering that scales. AI agents that work.",
+    template: "%s | Falconfio",
+  },
+  description:
+    "Falconfio builds scalable web, mobile and cloud products, and custom AI agents that plug into the tools your team already uses.",
+  applicationName: "Falconfio",
+  authors: [{ name: "GK TechMatrix" }],
+  creator: "GK TechMatrix",
+  publisher: "GK TechMatrix",
   openGraph: {
-    title: "Falconfio - Full-Stack Product Engineering",
-    description: "Full-stack product engineering for ambitious startups. AI integration, scalable web & mobile apps, and cloud infrastructure.",
+    siteName: "Falconfio",
     type: "website",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const theme = localStorage.getItem('theme') || 'dark';
-                  document.documentElement.classList.remove('dark', 'light');
-                  document.documentElement.classList.add(theme);
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-        {children}
-      </body>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

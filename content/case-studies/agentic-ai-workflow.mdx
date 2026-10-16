@@ -1,22 +1,24 @@
----
-title: "Transforming Logistics with Multi-Agent AI Orchestration"
-description: "How we implemented a 'Silicon Workforce' of autonomous agents to handle end-to-end supply chain exceptions."
-date: "2026-02-10"
-client: "Global LogiTech Corp"
-industry: "Logistics & Supply Chain"
-technologies:
-  - "LangGraph"
-  - "GPT-5 (Early Access)"
-  - "Python"
-  - "Vector Databases (Pinecone)"
-  - "AutoGPT Framework"
-results:
-  - "85% reduction in human intervention for routing exceptions"
-  - "Operational response time dropped from 4 hours to 90 seconds"
-  - "20% increase in fuel efficiency via real-time agentic re-routing"
-  - "Successful management of 1M+ autonomous 'sub-tasks' daily"
-coverImage: "/images/case-studies/agent-decision-flow.png"
----
+export const meta = {
+  "title": "Transforming Logistics with Multi-Agent AI Orchestration",
+  "description": "How we implemented a 'Silicon Workforce' of autonomous agents to handle end-to-end supply chain exceptions.",
+  "date": "2026-02-10",
+  "client": "Global LogiTech Corp",
+  "industry": "Logistics & Supply Chain",
+  "technologies": [
+    "LangGraph",
+    "Python",
+    "Vector Databases (Pinecone)",
+    "AutoGPT Framework"
+  ],
+  "results": [
+    "85% reduction in human intervention for routing exceptions",
+    "Operational response time dropped from 4 hours to 90 seconds",
+    "20% increase in fuel efficiency via real-time agentic re-routing",
+    "Successful management of 1M+ autonomous 'sub-tasks' daily"
+  ],
+  "status": "published",
+  "featured": true
+};
 
 ## The Challenge
 
@@ -32,15 +34,13 @@ We began by mapping out the critical decision points and information flows withi
 
 This initial architecture blueprint was crucial for establishing clear communication protocols and responsibilities among the agents.
 
-![Agentic Architecture Design](/images/case-studies/agent-decision-flow.png)
-
-
+<AgentFlow />
 
 ### Phase 2: Agent Development and Training
 
-We developed several key agent types, leveraging advanced LLMs (like GPT-5 for its reasoning capabilities) and specialized tools:
+We developed several key agent types, leveraging advanced LLMs (like frontier LLMs for their reasoning capabilities) and specialized tools:
 
-1.  **The Orchestrator Agent (LangGraph/GPT-5):** The central brain. It continuously monitors real-time data feeds (weather, GPS, news, port status), identifies potential disruptions, and delegates tasks to specialized agents.
+1.  **The Orchestrator Agent (LangGraph + LLM):** The central brain. It continuously monitors real-time data feeds (weather, GPS, news, port status), identifies potential disruptions, and delegates tasks to specialized agents.
 2.  **The Re-Router Agent (AutoGPT Framework):** Given a disruption, this agent instantly analyzes alternative shipping routes, considering factors like cost, time, and capacity, interfacing with global logistics APIs.
 3.  **The Negotiator Agent (Python/Custom API):** This agent automatically contacts affected vendors, carriers, and partners via API or structured email, renegotiating terms, securing new slots, or requesting refunds based on predefined policies.
 4.  **The Compliance Officer Agent (Vector DB/Python):** Crucial for a global operation, this agent ensures all proposed solutions and negotiations adhere to international trade laws, customs regulations, and environmental policies.
@@ -49,9 +49,7 @@ Each agent was equipped with a "toolbelt" of APIs and databases, allowing them t
 
 Here's an example of an agent's internal thought process during a routing change:
 
-![Agent Decision Flow](/images/case-studies/agent-decision-flow.png)
-
-
+<AgentTrace />
 
 ### Phase 3: Human-in-the-Loop Integration
 
@@ -69,10 +67,6 @@ Within months of deployment, Global LogiTech witnessed a profound transformation
 * **Successful management of 1M+ autonomous 'sub-tasks' daily:** The system processes millions of micro-decisions and data points without human oversight.
 
 The system effectively acts as a self-healing grid, allowing human teams to focus on strategic initiatives rather than reactive firefighting.
-
-![Multi-Agent System Results](/images/case-studies/multi-agent-results.png)
-
-
 
 ## Key Learnings
 
