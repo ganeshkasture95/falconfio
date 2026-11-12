@@ -1,0 +1,56 @@
+export const meta = {
+  "title": "How to cut your cloud bill without a rewrite",
+  "description": "Most cloud waste comes from a few predictable places. A practical, low-risk order of work for bringing spend back under control.",
+  "date": "2026-11-10",
+  "category": "Cloud Cost",
+  "status": "published"
+};
+
+Cloud bills rarely grow because of one big mistake. They grow through small decisions nobody revisits: a database sized for a launch that never came, a test environment left running, logs kept forever. The fix is rarely a rewrite. It is a steady, low-risk clean-up in the right order.
+
+## Step 1: Make spend visible
+
+You can't reduce what you can't see. Before changing anything:
+
+- **Tag every resource** by service, environment and team.
+- **Set a budget and alerts** per environment, so surprises show up in days, not at month-end.
+- **Name an owner** for each line of the bill.
+
+This step alone often reveals forgotten resources that can simply be switched off.
+
+## Step 2: Remove what nobody uses
+
+Look for the easy wins first. They carry almost no risk:
+
+- Test and preview environments running at night and at weekends.
+- Unattached disks, old snapshots and unused IP addresses.
+- Logs and backups kept far longer than any rule requires.
+
+## Step 3: Right-size what's left
+
+Many servers and databases run well below their capacity. Check average and peak use over a few weeks, then step down one size at a time, watching performance as you go. For workloads that rise and fall, use auto-scaling instead of sizing for the peak all day.
+
+## Step 4: Commit where it's predictable
+
+Once usage is stable and right-sized, use your provider's commitment discounts (reserved capacity or savings plans) for the steady baseline. Keep the spiky part on demand. Commit after right-sizing, never before, or you lock in the waste.
+
+## Step 5: Fix the expensive patterns in the code
+
+Now look at how the application uses resources:
+
+- **Chatty services** making many small network calls that could be one.
+- **Missing caches** for data that rarely changes.
+- **Heavy work done during user requests** that belongs in a background queue.
+- **Data transfer** between regions or out to the internet that could be avoided.
+
+These changes take more effort, but they improve speed as well as cost.
+
+## Step 6: Keep it from creeping back
+
+Cost control is a habit, not a project. Review the bill monthly, show cost per customer or per transaction next to your business metrics, and add cost checks to architecture reviews for new features.
+
+## A note on green software
+
+Most of these steps also cut energy use. Less idle capacity and fewer wasted cycles mean a smaller carbon footprint, which is increasingly something customers and regulators ask about.
+
+If you'd like help, our [Scalable Architecture & Cloud](/services/architecture) service includes cost reviews, or you can [book a free call](/contact) to talk through your bill.

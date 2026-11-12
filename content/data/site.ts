@@ -183,3 +183,9 @@ export const engagements = [
   { code: "03", title: "Architecture review", body: "A two-week deep dive into your code, infrastructure and costs, with a prioritised action plan.", href: "/how-we-work#review" },
   { code: "04", title: "AI retainer", body: "Ongoing agent building, tuning and monitoring, with a monthly report of hours and money saved.", href: "/how-we-work#retainer" },
 ];
+
+/**
+ * Pricing used by the estimator. Leave the rate as null to show timelines only;
+ * set it (USD per team-week) to also show a cost range.
+ */
+export const pricing: { weeklyTeamRateUSD: number | null } = { weeklyTeamRateUSD: null };

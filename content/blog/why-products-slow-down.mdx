@@ -1,0 +1,53 @@
+export const meta = {
+  "title": "Why products slow down as they grow, and six warning signs to watch",
+  "description": "Most products don't fail because of a missing feature. They fail because the system underneath can't keep up. Here are the early signs, and what to do about each.",
+  "date": "2026-10-20",
+  "category": "Architecture",
+  "status": "published"
+};
+
+Every growing product hits the same wall sooner or later. Pages that were instant now take seconds. Releases that used to be routine now need a war room. The cloud bill grows faster than revenue. Nobody made one bad decision. The system simply wasn't designed for the load it now carries.
+
+The good news: the warning signs show up long before the outage. Here are six we look for first.
+
+## 1. A handful of database queries do most of the damage
+
+In almost every slow system we review, a few queries account for most of the database time. They were fine with a thousand rows and painful with ten million.
+
+**What to do:** turn on query statistics, find the top ten by total time, and fix them first. Usually that means an index, a smaller result set, or caching a result that rarely changes. Add a read replica before you need one, not during an incident.
+
+## 2. You hear about problems from customers
+
+If support tickets are your monitoring system, you are always the last to know. By the time a customer writes in, many more have already left quietly.
+
+**What to do:** alert on what users feel, such as error rates and slow responses on key pages, rather than on CPU graphs. Add tracing so you can follow one slow request through every service it touches.
+
+## 3. Deploys are rare, big and scary
+
+When releasing is painful, teams release less often. Each release then contains more change, which makes it riskier, which makes the next one even rarer.
+
+**What to do:** automate the path to production, add a preview environment for every change, and make rollback a single command. Small, frequent releases are safer than big, infrequent ones.
+
+## 4. Peak traffic means everyone is on call
+
+Launches, campaigns, month-end and sale days shouldn't need the whole team awake. If they do, the system has no headroom.
+
+**What to do:** load-test before big moments, cache aggressively at the edge, and move slow work such as emails, reports and image processing onto background queues so it can't block a user.
+
+## 5. The cloud bill has no owner
+
+If nobody can say what each part of the system costs, nobody can say whether it's worth it. Idle servers, oversized databases and forgotten test environments add up quietly.
+
+**What to do:** tag every resource by service and team, review spend monthly, and right-size anything running below a third of its capacity. Often the cheapest fix is turning things off.
+
+## 6. Every change touches everything
+
+When a small feature needs edits in ten places, the codebase has stopped having clear boundaries. Work slows down, and bugs appear far from the change that caused them.
+
+**What to do:** you rarely need a full rewrite or a move to microservices. Start by drawing boundaries inside the code you have: clear modules with clear owners and narrow interfaces between them.
+
+## Where to start
+
+You don't need to fix all six at once. Measure first, fix the one that hurts most, and keep releasing while you do it. That is how systems get faster without stopping the roadmap.
+
+If you'd like a quick read on where you stand, our free [Architecture Scorecard](/tools/scorecard) takes about five minutes. Or [book a call](/contact) and talk it through with an engineer.
